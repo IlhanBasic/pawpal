@@ -40,7 +40,7 @@ function DogScreen({ route, navigation }) {
 
   const dog = dogs.find((item) => item.name === dogId);
   console.log(dog);
-  
+
   // Update favorite status when favorites or dogId changes
   useEffect(() => {
     setIsFavorite(favorites.some((item) => item.name === dogId));
@@ -346,44 +346,58 @@ export default DogScreen;
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    backgroundColor: COLORS.light,
+    backgroundColor: COLORS.background,  // svetlija pozadina za moderniji feel
   },
   title: {
-    fontSize: 36,
-    fontWeight: "bold",
-    color: COLORS.dark,
+    fontSize: 34,
+    fontWeight: "700",
+    color: COLORS.textDark,
     textAlign: "center",
     fontFamily: "header-font",
-    marginBottom: 40,
-    letterSpacing: 1,
+    marginBottom: 30,
+    letterSpacing: 1.2,
+    textTransform: "uppercase",
   },
   container: {
-    padding: 20,
+    padding: 24,
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.light,
+    borderRadius: 16,
+    marginHorizontal: 16,
+    marginVertical: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+    elevation: 8, // za Android senku
   },
   image: {
     width: "100%",
-    height: 300,
-    borderRadius: 10,
-    marginBottom: 20,
+    height: 280,
+    borderRadius: 16,
+    marginBottom: 24,
+    resizeMode: "cover",
   },
   infoContainer: {
     width: "100%",
   },
   name: {
-    fontSize: 28,
-    fontWeight: "bold",
-    marginBottom: 10,
+    fontSize: 26,
+    fontWeight: "700",
+    color: COLORS.textDark,
+    marginBottom: 12,
   },
   detail: {
     fontSize: 16,
-    marginBottom: 5,
+    color: COLORS.textLight,
+    marginBottom: 8,
+    lineHeight: 22,
   },
   description: {
     fontSize: 16,
-    marginTop: 15,
-    color: "#444",
+    marginTop: 20,
+    color: COLORS.textLight,
+    lineHeight: 24,
   },
   centered: {
     flex: 1,
@@ -392,10 +406,11 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     width: "100%",
-    paddingHorizontal: 20,
+    paddingHorizontal: 16,
+    marginTop: 30,
   },
   buttonContent: {
     flexDirection: "row",
@@ -403,20 +418,26 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     flex: 1,
-    padding: 20,
+    padding: 24,
     justifyContent: "center",
     alignItems: "center",
   },
   textInput: {
     width: "100%",
     borderWidth: 1,
-    borderColor: COLORS.secondary,
+    borderColor: COLORS.border,
     backgroundColor: COLORS.light,
-    color: "#000",
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    fontSize: 16,
-    marginBottom: 15,
+    color: COLORS.textDark,
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    fontSize: 17,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    elevation: 2,
   },
 });
+
