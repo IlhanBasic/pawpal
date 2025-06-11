@@ -51,7 +51,6 @@ const COLORS = {
    ```bash
    git clone https://github.com/IlhanBasic/pawpal.git
    cd pawpal
-   ```
 
 2. Install dependencies:
    ```bash
