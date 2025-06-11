@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 18,
+    fontFamily: "body-font",
     color: "#888",
     fontStyle: "italic",
   },

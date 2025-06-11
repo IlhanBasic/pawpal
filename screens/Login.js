@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
   heading: {
     fontSize: 32,
     fontWeight: "800",
+    fontFamily: "title-font",
     color: "#1A1A2E",
     marginBottom: 40,
     letterSpacing: -0.5,
@@ -92,6 +93,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 15,
+    fontFamily: "body-font",
     marginBottom: 10,
     color: "#4A5568",
     fontWeight: "600",
@@ -108,6 +110,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "500",
     color: "#1A202C",
+    fontFamily: "body-font",
     shadowColor: "#3182CE",
     shadowOpacity: 0.08,
     shadowRadius: 10,
@@ -136,6 +139,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#FFFFFF",
+    fontFamily: "body-font",
     fontWeight: "700",
     fontSize: 16,
     letterSpacing: 0.25
@@ -155,12 +159,14 @@ const styles = StyleSheet.create({
   footerText: {
     marginTop: 24,
     textAlign: "center",
+    fontFamily: "body-font",
     color: "#718096",
     fontSize: 14
   },
   linkText: {
     color: "#007bff",
-    fontWeight: "600"
+    fontWeight: "600",
+    fontFamily: "body-font",
   },
   passwordToggle: {
     position: "absolute",

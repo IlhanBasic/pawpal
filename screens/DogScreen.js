@@ -381,12 +381,15 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 26,
+    fontFamily: "body-font",
     fontWeight: "700",
     color: COLORS.textDark,
     marginBottom: 12,
   },
   detail: {
     fontSize: 16,
+    fontFamily: "body-font",
+
     color: COLORS.textLight,
     marginBottom: 8,
     lineHeight: 22,
@@ -394,6 +397,7 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     marginTop: 20,
+    fontFamily: "body-font",
     color: COLORS.textLight,
     lineHeight: 24,
   },
@@ -423,6 +427,7 @@ const styles = StyleSheet.create({
   textInput: {
     width: "100%",
     borderWidth: 1,
+    fontFamily: "body-font",
     borderColor: COLORS.border,
     backgroundColor: COLORS.light,
     color: COLORS.textDark,

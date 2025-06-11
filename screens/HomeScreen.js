@@ -249,7 +249,7 @@ function Home({ navigation }) {
         imageStyle={{ opacity: 0.5 }}
       >
         <SafeAreaView>
-          <Text style={styles.title}>DEMO DOGS</Text>
+          <Text style={[styles.title,styles.titleForm]}>DEMO DOGS</Text>
           <View style={styles.buttonContainer}>
             <View style={styles.buttonContent}>
               <PrimaryButton onPress={() => setShowModal(true)}>
@@ -395,11 +395,23 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 36,
     fontWeight: "bold",
-    color: COLORS.dark,
     textAlign: "center",
     fontFamily: "title-font",
     marginBottom: 40,
+    color: COLORS.darkText,
     letterSpacing: 1,
+    
+  },
+  titleForm:{
+    color: "#fff",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
   },
   buttonContainer: {
     flexDirection: "row",
@@ -426,6 +438,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.secondary,
     backgroundColor: COLORS.light,
     color: "#000",
+    fontFamily: "body-font",
     borderRadius: 10,
     paddingVertical: 12,
     paddingHorizontal: 15,

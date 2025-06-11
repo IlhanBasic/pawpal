@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 32,
+    fontFamily: "title-font",
     fontWeight: "800",
     color: COLORS.darkText,
     marginBottom: 40,
@@ -97,15 +98,16 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 15,
+    fontFamily: "body-font",
     marginBottom: 8,
-    color: COLORS.textSecondary,
+    color: COLORS.darkText,
     fontWeight: "600",
     marginLeft: 4,
   },
   input: {
     width: "100%",
-    borderWidth: 1.5,
     borderColor: COLORS.borderLight,
+    fontFamily: "body-font",
     backgroundColor: "#fff",
     borderRadius: 14,
     paddingVertical: 16,
@@ -143,6 +145,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "700",
     fontSize: 16,
+    fontFamily: "body-font",
     letterSpacing: 0.5,
   },
   outlineButton: {
@@ -165,5 +168,6 @@ const styles = StyleSheet.create({
   linkText: {
     color: COLORS.primary,
     fontWeight: "600",
+    fontFamily: "body-font"
   },
 });
