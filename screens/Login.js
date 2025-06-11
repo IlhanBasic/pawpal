@@ -75,59 +75,97 @@ const styles = StyleSheet.create({
   authForm: {
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
-    padding: 24,
-    backgroundColor: "#f0f4f8",
+    paddingHorizontal: 32,
+    backgroundColor: "#F8FAFD"
   },
   heading: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 30,
+    fontSize: 32,
+    fontWeight: "800",
+    color: "#1A1A2E",
+    marginBottom: 40,
+    letterSpacing: -0.5,
+    textAlign: "center"
   },
   inputContainer: {
     width: "100%",
-    marginBottom: 15,
+    marginBottom: 24
   },
   label: {
-    fontSize: 14,
-    marginBottom: 6,
-    color: "#555",
+    fontSize: 15,
+    marginBottom: 10,
+    color: "#4A5568",
+    fontWeight: "600",
+    marginLeft: 4
   },
   input: {
     width: "100%",
-    borderWidth: 1,
-    borderColor: "#ccc",
-    backgroundColor: "#fff",
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
+    borderWidth: 1.5,
+    borderColor: "#E2E8F0",
+    backgroundColor: "#FFFFFF",
+    borderRadius: 12,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
     fontSize: 16,
-    shadowColor: "#000",
-    shadowOpacity: 0.05,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-    elevation: 2,
+    fontWeight: "500",
+    color: "#1A202C",
+    shadowColor: "#3182CE",
+    shadowOpacity: 0.08,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 3
+  },
+  inputFocused: {
+    borderColor: "#007bff",
+    shadowColor: "#007bff",
+    shadowOpacity: 0.15
   },
   button: {
     width: "100%",
     backgroundColor: "#007bff",
-    paddingVertical: 14,
-    borderRadius: 8,
-    marginTop: 10,
+    paddingVertical: 16,
+    borderRadius: 12,
+    marginTop: 16,
     alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    shadowColor: "#0056b3",
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 5
   },
   buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
+    color: "#FFFFFF",
+    fontWeight: "700",
     fontSize: 16,
+    letterSpacing: 0.25
   },
   outlineButton: {
-    backgroundColor: "#fff",
-    borderWidth: 1,
+    backgroundColor: "transparent",
+    borderWidth: 2,
     borderColor: "#007bff",
+    marginTop: 12
   },
   outlineText: {
-    color: "#007bff",
+    color: "#007bff"
   },
+  buttonIcon: {
+    marginRight: 12
+  },
+  footerText: {
+    marginTop: 24,
+    textAlign: "center",
+    color: "#718096",
+    fontSize: 14
+  },
+  linkText: {
+    color: "#007bff",
+    fontWeight: "600"
+  },
+  passwordToggle: {
+    position: "absolute",
+    right: 16,
+    top: 16,
+    padding: 8
+  }
 });

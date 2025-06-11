@@ -346,7 +346,7 @@ export default DogScreen;
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    backgroundColor: COLORS.background,  // svetlija pozadina za moderniji feel
+    backgroundColor: COLORS.background, 
   },
   title: {
     fontSize: 34,
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 12,
-    elevation: 8, // za Android senku
+    elevation: 8,
   },
   image: {
     width: "100%",
