@@ -18,32 +18,37 @@ import AuthContextProvider from "./store/context/auth";
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
+import COLORS from "./constants/colors";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 function TabsNavigator() {
   return (
     <BottomTab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ color, size }) => {
-          let iconName;
-
           if (route.name === "AllList") {
-            iconName = "list-ul";
-            return <FontAwesome6 name={iconName} size={size} color={color} />;
+            return <FontAwesome6 name="list-ul" size={size} color={color} />;
           } else if (route.name === "Favorites") {
-            iconName = "heart";
-            return <Ionicons name={iconName} size={size} color={color} />;
+            return <Ionicons name="heart" size={size} color={color} />;
           }
         },
-        tabBarActiveTintColor: "tomato",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: COLORS.primary,
+        tabBarInactiveTintColor: COLORS.textLight,
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#fff",
-          paddingBottom: 5,
-          height: 60,
+          backgroundColor: COLORS.background,
+          borderTopWidth: 0.5,
+          borderTopColor: COLORS.border,
+          height: 65,
+          paddingBottom: 8,
+          shadowColor: "#000",
+          shadowOpacity: 0.05,
+          shadowOffset: { width: 0, height: -2 },
+          shadowRadius: 4,
+          elevation: 4,
         },
         tabBarLabelStyle: {
-          fontSize: 12,
-          marginBottom: 5,
+          fontSize: 13,
+          fontWeight: "600",
         },
       })}
     >
@@ -73,23 +78,25 @@ function DrawerNavigator() {
       initialRouteName="Home"
       screenOptions={{
         headerStyle: {
-          backgroundColor: "tomato",
+          backgroundColor: COLORS.primary,
+          elevation: 0,
+          shadowOpacity: 0,
         },
-        headerTintColor: "#fff",
+        headerTintColor: COLORS.light,
         headerTitleStyle: {
-          fontWeight: "bold",
-          fontSize: 20,
+          fontWeight: "700",
+          fontSize: 22,
         },
         drawerStyle: {
-          backgroundColor: "#f8f8f8",
-          width: 240,
+          backgroundColor: COLORS.secondary,
+          width: 260,
         },
-        drawerActiveTintColor: "tomato",
-        drawerInactiveTintColor: "#333",
+        drawerActiveTintColor: COLORS.primary,
+        drawerInactiveTintColor: COLORS.textLight,
         drawerLabelStyle: {
-          fontSize: 16,
+          fontSize: 17,
           fontWeight: "500",
-          marginLeft: -15,
+          marginLeft: -10,
         },
       }}
     >
@@ -119,50 +126,56 @@ function DrawerNavigator() {
 export default function App() {
   return (
     <>
-      <StatusBar style="light" />
-      <AuthContextProvider>
-        <FavoritesContextProvider>
-          <DogsContextProvider>
-            <NavigationContainer>
-              <Stack.Navigator
-                screenOptions={{
-                  headerStyle: {
-                    backgroundColor: "tomato",
-                  },
-                  headerTintColor: "#fff",
-                  headerTitleStyle: {
-                    fontWeight: "bold",
-                  },
-                  headerBackTitleVisible: false,
-                }}
-              >
-                <Stack.Screen
-                  name="Login"
-                  component={Login}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="SignUp"
-                  component={SignUp}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="Menu"
-                  component={DrawerNavigator}
-                  options={{ headerShown: false }}
-                />
-                <Stack.Screen
-                  name="Details"
-                  component={DogScreen}
-                  options={({ route }) => ({
-                    title: route.params?.dogName || "Dog Details",
-                  })}
-                />
-              </Stack.Navigator>
-            </NavigationContainer>
-          </DogsContextProvider>
-        </FavoritesContextProvider>
-      </AuthContextProvider>
+      <SafeAreaProvider>
+        <StatusBar style="light" />
+        <AuthContextProvider>
+          <FavoritesContextProvider>
+            <DogsContextProvider>
+              <NavigationContainer>
+                <Stack.Navigator
+                  screenOptions={{
+                    headerStyle: {
+                      backgroundColor: COLORS.primary,
+                      elevation: 0,
+                      shadowOpacity: 0,
+                    },
+                    headerTintColor: COLORS.light,
+                    headerTitleStyle: {
+                      fontWeight: "700",
+                      fontSize: 20,
+                      letterSpacing: 0.5,
+                    },
+                    headerBackTitleVisible: false,
+                  }}
+                >
+                  <Stack.Screen
+                    name="Login"
+                    component={Login}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="SignUp"
+                    component={SignUp}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="Menu"
+                    component={DrawerNavigator}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="Details"
+                    component={DogScreen}
+                    options={({ route }) => ({
+                      title: route.params?.dogName || "Dog Details",
+                    })}
+                  />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </DogsContextProvider>
+          </FavoritesContextProvider>
+        </AuthContextProvider>
+      </SafeAreaProvider>
     </>
   );
 }
