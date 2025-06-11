@@ -103,6 +103,8 @@ function Home({ navigation }) {
   const authCtx = useContext(AuthContext);
   useFonts({
     "header-font": require("../assets/fonts/Matcha-EaLge.ttf"),
+    "body-font": require("../assets/fonts/Poppins-Regular.ttf"),
+    'title-font': require("../assets/fonts/RobotoMono-Regular.ttf"),
   });
   const [isFetching, setIsFetching] = useState(false);
   const [showModal, setShowModal] = useState();
@@ -395,7 +397,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.dark,
     textAlign: "center",
-    fontFamily: "header-font",
+    fontFamily: "title-font",
     marginBottom: 40,
     letterSpacing: 1,
   },

@@ -1,5 +1,4 @@
 import { createContext, useState,useEffect } from "react";
-import DOGS from "../../data/dogs";
 import { getFavoritesAsync } from "../../utils/http";
 export const FavoritesContext = createContext({
   favorites: [],

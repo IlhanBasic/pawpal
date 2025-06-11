@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-import DOGS from "../../data/dogs";
 import { getDogsAsync } from "../../utils/http";
 export const DogsContext = createContext({
   dogs: [],

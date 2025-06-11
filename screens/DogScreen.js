@@ -39,7 +39,6 @@ function DogScreen({ route, navigation }) {
     useContext(FavoritesContext);
 
   const dog = dogs.find((item) => item.name === dogId);
-  console.log(dog);
 
   // Update favorite status when favorites or dogId changes
   useEffect(() => {
@@ -353,10 +352,9 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: COLORS.textDark,
     textAlign: "center",
-    fontFamily: "header-font",
+    fontFamily: "title-font",
     marginBottom: 30,
     letterSpacing: 1.2,
-    textTransform: "uppercase",
   },
   container: {
     padding: 24,
