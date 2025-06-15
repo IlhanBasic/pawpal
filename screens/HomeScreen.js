@@ -32,6 +32,8 @@ import LoaderOverlay from "../components/LoaderOverlay";
 import { AuthContext } from "../store/context/auth";
 import * as Notifications from "expo-notifications";
 import CustonImagePicker from "../components/ImagePicker";
+import LocationPicker from "../components/LocationPicker";
+import Form from "../components/Form";
 //prikazuje notifikacije
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -264,7 +266,7 @@ function Home({ navigation }) {
                 <Text>Lista</Text>
               </PrimaryButton>
             </View>
-            <CustonImagePicker />
+            <Form />
           </View>
           <Text>{tok}</Text>
         </SafeAreaView>

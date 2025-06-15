@@ -14,6 +14,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import FavoritesContextProvider from "./store/context/favorites";
 import SignUp from "./screens/SignUp";
 import Login from "./screens/Login";
+import Map from "./screens/Map";
 import AuthContextProvider from "./store/context/auth";
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
@@ -153,9 +154,15 @@ export default function App() {
                     component={Login}
                     options={{ headerShown: false }}
                   />
+
                   <Stack.Screen
                     name="SignUp"
                     component={SignUp}
+                    options={{ headerShown: false }}
+                  />
+                  <Stack.Screen
+                    name="Map"
+                    component={Map}
                     options={{ headerShown: false }}
                   />
                   <Stack.Screen
