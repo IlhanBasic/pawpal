@@ -21,6 +21,8 @@ const BottomTab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 import COLORS from "./constants/colors";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { navigationRef } from "./navigation/RootNavigation"; // prilagodi putanju
+import LocationContextProvider from "./store/context/location";
 function TabsNavigator() {
   return (
     <BottomTab.Navigator
@@ -77,6 +79,10 @@ function DrawerNavigator() {
   return (
     <Drawer.Navigator
       initialRouteName="Home"
+      initialParams={{
+        selectedLatitude: null,
+        selectedLongitude: null,
+      }}
       screenOptions={{
         headerStyle: {
           backgroundColor: COLORS.primary,
@@ -129,59 +135,61 @@ export default function App() {
     <>
       <SafeAreaProvider>
         <StatusBar style="light" />
-        <AuthContextProvider>
-          <FavoritesContextProvider>
-            <DogsContextProvider>
-              <NavigationContainer>
-                <Stack.Navigator
-                  screenOptions={{
-                    headerStyle: {
-                      backgroundColor: COLORS.primary,
-                      elevation: 0,
-                      shadowOpacity: 0,
-                    },
-                    headerTintColor: COLORS.light,
-                    headerTitleStyle: {
-                      fontWeight: "700",
-                      fontSize: 20,
-                      letterSpacing: 0.5,
-                    },
-                    headerBackTitleVisible: false,
-                  }}
-                >
-                  <Stack.Screen
-                    name="Login"
-                    component={Login}
-                    options={{ headerShown: false }}
-                  />
+        <LocationContextProvider>
+          <AuthContextProvider>
+            <FavoritesContextProvider>
+              <DogsContextProvider>
+                <NavigationContainer ref={navigationRef}>
+                  <Stack.Navigator
+                    screenOptions={{
+                      headerStyle: {
+                        backgroundColor: COLORS.primary,
+                        elevation: 0,
+                        shadowOpacity: 0,
+                      },
+                      headerTintColor: COLORS.light,
+                      headerTitleStyle: {
+                        fontWeight: "700",
+                        fontSize: 20,
+                        letterSpacing: 0.5,
+                      },
+                      headerBackTitleVisible: false,
+                    }}
+                  >
+                    <Stack.Screen
+                      name="Login"
+                      component={Login}
+                      options={{ headerShown: false }}
+                    />
 
-                  <Stack.Screen
-                    name="SignUp"
-                    component={SignUp}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="Map"
-                    component={Map}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="Menu"
-                    component={DrawerNavigator}
-                    options={{ headerShown: false }}
-                  />
-                  <Stack.Screen
-                    name="Details"
-                    component={DogScreen}
-                    options={({ route }) => ({
-                      title: route.params?.dogName || "Dog Details",
-                    })}
-                  />
-                </Stack.Navigator>
-              </NavigationContainer>
-            </DogsContextProvider>
-          </FavoritesContextProvider>
-        </AuthContextProvider>
+                    <Stack.Screen
+                      name="SignUp"
+                      component={SignUp}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Map"
+                      component={Map}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Menu"
+                      component={DrawerNavigator}
+                      options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                      name="Details"
+                      component={DogScreen}
+                      options={({ route }) => ({
+                        title: route.params?.dogName || "Dog Details",
+                      })}
+                    />
+                  </Stack.Navigator>
+                </NavigationContainer>
+              </DogsContextProvider>
+            </FavoritesContextProvider>
+          </AuthContextProvider>
+        </LocationContextProvider>
       </SafeAreaProvider>
     </>
   );

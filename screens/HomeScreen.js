@@ -8,6 +8,7 @@ import {
   Platform,
   Alert,
   Pressable,
+  Button,
 } from "react-native";
 import axios from "axios";
 import { API_URL } from "@env";
@@ -27,6 +28,7 @@ import LoaderOverlay from "../components/LoaderOverlay";
 import { AuthContext } from "../store/context/auth";
 import * as Notifications from "expo-notifications";
 import CreateForm from "../components/CreateForm";
+import {LocationContext} from "../store/context/location"; 
 //prikazuje notifikacije
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -39,6 +41,7 @@ Notifications.setNotificationHandler({
 });
 
 function Home({ navigation }) {
+  const locationCtx = useContext(LocationContext)
   useEffect(() => {
     async function configurePushNotifications() {
       const { status } = await Notifications.getPermissionsAsync();
@@ -87,10 +90,10 @@ function Home({ navigation }) {
     pol: "",
     slika: "",
     opis: "",
-    lokacija:{
-      latitude: 0,
-      longitude: 0
-    }
+    lokacija: {
+      latitude: locationCtx.lat,
+      longitude: locationCtx.lng,
+    },
   });
   useEffect(() => {
     axios
@@ -191,9 +194,11 @@ function Home({ navigation }) {
       opis: "",
       lokacija: {
         latitude: 0,
-        longitude: 0
-      }
+        longitude: 0,
+      },
     });
+    locationCtx.setLat(0);
+    locationCtx.setLng(0);
     const d = Date.now();
     const date = d + 1000 * 2;
     //notifikacija se zakazuje

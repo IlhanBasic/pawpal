@@ -14,12 +14,7 @@ import COLORS from "../constants/colors";
 import CustomImagePicker from "./ImagePicker";
 import LocationPicker from "./LocationPicker";
 
-function CreateForm({
-  inputData,
-  setInputData,
-  addDogHandler,
-  setShowModal,
-}) {
+function CreateForm({ inputData, setInputData, addDogHandler, setShowModal }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAvoidingView

@@ -103,8 +103,14 @@ function EditForm({
               setSelectedDog({ ...selectedDog, opis: text })
             }
           />
-          <CustomImagePicker inputData={selectedDog} setInputData={setSelectedDog}/>
-          <LocationPicker inputData={selectedDog} setInputData={selectedDog}/>
+          <CustomImagePicker
+            inputData={selectedDog}
+            setInputData={setSelectedDog}
+          />
+          <LocationPicker
+            inputData={selectedDog}
+            setInputData={setSelectedDog}
+          />
           <SubmitButton onPress={() => updateDogSubmitHandler(selectedDog)}>
             Izmeni
           </SubmitButton>

@@ -1,8 +1,13 @@
-import { useState } from "react";
 import { View, Button, Alert, Text, Image, StyleSheet } from "react-native";
 import * as Location from "expo-location";
 import { getMapPreview } from "../utils/location";
+import { useNavigation } from "@react-navigation/native";
+import { useContext, useCallback, useEffect } from "react";
+import { LocationContext } from "../store/context/location";
 function LocationPicker({ inputData, setInputData }) {
+  const locationCtx = useContext(LocationContext);
+
+  const navigation = useNavigation();
   async function verifyPermissions() {
     const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -17,7 +22,7 @@ function LocationPicker({ inputData, setInputData }) {
     return true;
   }
 
-  async function pickLocationHandler() {
+  const pickUserLocationHandler = async () => {
     const hasPermission = await verifyPermissions();
     if (!hasPermission) {
       return;
@@ -32,8 +37,22 @@ function LocationPicker({ inputData, setInputData }) {
         longitude: location.coords.longitude,
       },
     });
-  }
+  };
 
+  async function pickCustomLocationHandler() {
+    navigation.navigate("Map");
+  }
+  useEffect(() => {
+    setInputData((prevData) => {
+      return {
+        ...prevData,
+        lokacija: {
+          latitude: locationCtx.lat,
+          longitude: locationCtx.lng,
+        },
+      };
+    });
+  }, [locationCtx.lat, locationCtx.lng]);
   return (
     <View style={{ margin: 20 }}>
       <View style={{ marginBottom: 10 }}>
@@ -41,22 +60,21 @@ function LocationPicker({ inputData, setInputData }) {
           <Image
             style={styles.img}
             source={{
-              uri: getMapPreview(
-                inputData.lokacija.latitude,
-                inputData.lokacija.longitude
-              ),
+              uri: getMapPreview(locationCtx.lat, locationCtx.lng),
             }}
           />
         ) : (
           <Text>No location picked yet</Text>
         )}
       </View>
-      <Button title="Pick Location" onPress={pickLocationHandler} />
+      <Button title="Vaša lokacija" onPress={pickUserLocationHandler} />
+      <Button title="Odaberi lokaciju" onPress={pickCustomLocationHandler} />
     </View>
   );
 }
 
 export default LocationPicker;
+
 const styles = StyleSheet.create({
   img: {
     width: 200,
