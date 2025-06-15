@@ -14,8 +14,8 @@ import {
   Pressable,
 } from "react-native";
 import axios from "axios";
-import {API_URL} from '@env';
-import {PUSH_NOTIFICATION_EXPO_API} from '@env';
+import { API_URL } from "@env";
+import { PUSH_NOTIFICATION_EXPO_API } from "@env";
 import COLORS from "../constants/colors";
 import PrimaryButton from "../components/PrimaryButton";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -31,6 +31,7 @@ import { addDogAsync, storePushToken } from "../utils/http";
 import LoaderOverlay from "../components/LoaderOverlay";
 import { AuthContext } from "../store/context/auth";
 import * as Notifications from "expo-notifications";
+import CustonImagePicker from "../components/ImagePicker";
 //prikazuje notifikacije
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -104,7 +105,7 @@ function Home({ navigation }) {
   useFonts({
     "header-font": require("../assets/fonts/Matcha-EaLge.ttf"),
     "body-font": require("../assets/fonts/Poppins-Regular.ttf"),
-    'title-font': require("../assets/fonts/RobotoMono-Regular.ttf"),
+    "title-font": require("../assets/fonts/RobotoMono-Regular.ttf"),
   });
   const [isFetching, setIsFetching] = useState(false);
   const [showModal, setShowModal] = useState();
@@ -249,7 +250,7 @@ function Home({ navigation }) {
         imageStyle={{ opacity: 0.5 }}
       >
         <SafeAreaView>
-          <Text style={[styles.title,styles.titleForm]}>DEMO DOGS</Text>
+          <Text style={[styles.title, styles.titleForm]}>DEMO DOGS</Text>
           <View style={styles.buttonContainer}>
             <View style={styles.buttonContent}>
               <PrimaryButton onPress={() => setShowModal(true)}>
@@ -263,6 +264,7 @@ function Home({ navigation }) {
                 <Text>Lista</Text>
               </PrimaryButton>
             </View>
+            <CustonImagePicker />
           </View>
           <Text>{tok}</Text>
         </SafeAreaView>
@@ -400,9 +402,8 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     color: COLORS.darkText,
     letterSpacing: 1,
-    
   },
-  titleForm:{
+  titleForm: {
     color: "#fff",
     shadowColor: "#000",
     shadowOffset: {
@@ -424,7 +425,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-
   },
   inputContainer: {
     flex: 1,

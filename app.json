@@ -16,7 +16,7 @@
       "buildNumber": "1.0.0",
       "supportsTablet": true,
       "bundleIdentifier": "com.ilhanbasic456.DEMODOGAPP",
-      "icon":"./assets/icon.png",
+      "icon": "./assets/icon.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -45,6 +45,12 @@
             "./local/assets/notification_sound_other.wav"
           ],
           "enableBackgroundRemoteNotifications": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
     ],
