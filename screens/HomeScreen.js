@@ -5,10 +5,6 @@ import {
   StyleSheet,
   SafeAreaView,
   Modal,
-  Button,
-  TextInput,
-  KeyboardAvoidingView,
-  ScrollView,
   Platform,
   Alert,
   Pressable,
@@ -22,7 +18,6 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { useEffect, useLayoutEffect, useState } from "react";
-import SubmitButton from "../components/SubmitButton";
 import { useContext } from "react";
 import { DogsContext } from "../store/context/dogs";
 import { LinearGradient } from "expo-linear-gradient";
@@ -31,9 +26,7 @@ import { addDogAsync, storePushToken } from "../utils/http";
 import LoaderOverlay from "../components/LoaderOverlay";
 import { AuthContext } from "../store/context/auth";
 import * as Notifications from "expo-notifications";
-import CustonImagePicker from "../components/ImagePicker";
-import LocationPicker from "../components/LocationPicker";
-import Form from "../components/Form";
+import CreateForm from "../components/CreateForm";
 //prikazuje notifikacije
 Notifications.setNotificationHandler({
   handleNotification: async () => {
@@ -76,32 +69,6 @@ function Home({ navigation }) {
 
     configurePushNotifications();
   }, []);
-  // useEffect(() => {
-  //   //notifikacija primljena
-  //   const subscription1 = Notifications.addNotificationReceivedListener(
-  //     (notification) => {
-  //       console.log("Notifikacija primljena");
-  //       console.log(notification);
-  //       const userName = notification.request.content.data.userName;
-  //       console.log(userName);
-  //     }
-  //   );
-  //   //kliknuto na notifikaciju
-  //   const subscription2 = Notifications.addNotificationResponseReceivedListener(
-  //     (response) => {
-  //       console.log("Odgovoreno na notifikaciju");
-  //       console.log(response);
-  //       const userName = response.notification.request.content.data.userName;
-  //       console.log(userName);
-  //     }
-  //   );
-
-  //   return () => {
-  //     subscription1.remove();
-  //     subscription2.remove();
-  //   };
-  // }, []);
-
   const [tok, setTok] = useState(null);
   const authCtx = useContext(AuthContext);
   useFonts({
@@ -120,6 +87,10 @@ function Home({ navigation }) {
     pol: "",
     slika: "",
     opis: "",
+    lokacija:{
+      latitude: 0,
+      longitude: 0
+    }
   });
   useEffect(() => {
     axios
@@ -218,6 +189,10 @@ function Home({ navigation }) {
       pol: "",
       slika: "",
       opis: "",
+      lokacija: {
+        latitude: 0,
+        longitude: 0
+      }
     });
     const d = Date.now();
     const date = d + 1000 * 2;
@@ -266,7 +241,6 @@ function Home({ navigation }) {
                 <Text>Lista</Text>
               </PrimaryButton>
             </View>
-            <Form />
           </View>
           <Text>{tok}</Text>
         </SafeAreaView>
@@ -276,104 +250,12 @@ function Home({ navigation }) {
   if (showModal) {
     content = (
       <Modal style={styles.modal} visible={showModal} animationType="slide">
-        <SafeAreaView style={{ flex: 1 }}>
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <ScrollView contentContainerStyle={styles.inputContainer}>
-              <Text style={styles.title}>Unesite podatke:</Text>
-              <TextInput
-                placeholder="Ime"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={inputData.ime}
-                onChangeText={(text) =>
-                  setInputData({ ...inputData, ime: text })
-                }
-              />
-              <TextInput
-                placeholder="Rasa"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={inputData.rasa}
-                onChangeText={(text) =>
-                  setInputData({ ...inputData, rasa: text })
-                }
-              />
-              <TextInput
-                placeholder="Tezina"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={inputData.tezina}
-                onChangeText={(text) =>
-                  setInputData({ ...inputData, tezina: text })
-                }
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardAppearance="dark"
-                keyboardType="number-pad"
-              />
-              <TextInput
-                placeholder="Pol"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={inputData.pol}
-                onChangeText={(text) =>
-                  setInputData({ ...inputData, pol: text })
-                }
-              />
-              <TextInput
-                placeholder="Startost"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={inputData.starost}
-                onChangeText={(text) =>
-                  setInputData({ ...inputData, starost: text })
-                }
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardAppearance="dark"
-                keyboardType="number-pad"
-              />
-              <TextInput
-                placeholder="Boja"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={inputData.boja}
-                onChangeText={(text) =>
-                  setInputData({ ...inputData, boja: text })
-                }
-              />
-              <TextInput
-                placeholder="Slika"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={inputData.slika}
-                onChangeText={(text) =>
-                  setInputData({ ...inputData, slika: text })
-                }
-              />
-              <TextInput
-                placeholder="Opis"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={inputData.opis}
-                onChangeText={(text) =>
-                  setInputData({ ...inputData, opis: text })
-                }
-              />
-              <SubmitButton onPress={addDogHandler}>Dodaj</SubmitButton>
-              <View style={{ marginTop: 10 }}>
-                <Button
-                  title="Odustani"
-                  color={COLORS.primary}
-                  onPress={() => setShowModal(false)}
-                />
-              </View>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
+        <CreateForm
+          inputData={inputData}
+          setInputData={setInputData}
+          addDogHandler={addDogHandler}
+          setShowModal={setShowModal}
+        />
       </Modal>
     );
   }
@@ -389,13 +271,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.light,
   },
-  backgroundImage: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
   title: {
     fontSize: 36,
     fontWeight: "bold",
@@ -404,6 +279,13 @@ const styles = StyleSheet.create({
     marginBottom: 40,
     color: COLORS.darkText,
     letterSpacing: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
   titleForm: {
     color: "#fff",
@@ -427,24 +309,5 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-  inputContainer: {
-    flex: 1,
-    padding: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  textInput: {
-    width: "100%",
-    borderWidth: 1,
-    borderColor: COLORS.secondary,
-    backgroundColor: COLORS.light,
-    color: "#000",
-    fontFamily: "body-font",
-    borderRadius: 10,
-    paddingVertical: 12,
-    paddingHorizontal: 15,
-    fontSize: 16,
-    marginBottom: 15,
   },
 });

@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { View, Button, Alert, Text,Image, StyleSheet } from "react-native";
+import { View, Button, Alert, Text, Image, StyleSheet } from "react-native";
 import * as Location from "expo-location";
 import { getMapPreview } from "../utils/location";
-function LocationPicker() {
-  const [pickedLocation, setPickedLocation] = useState();
-
+function LocationPicker({ inputData, setInputData }) {
   async function verifyPermissions() {
     const { status } = await Location.requestForegroundPermissionsAsync();
 
@@ -27,21 +25,26 @@ function LocationPicker() {
 
     const location = await Location.getCurrentPositionAsync({ timeout: 5000 });
 
-    setPickedLocation({
-      lat: location.coords.latitude,
-      lng: location.coords.longitude,
+    setInputData({
+      ...inputData,
+      lokacija: {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      },
     });
-    console.log(getMapPreview(location.coords.latitude, location.coords.longitude));
   }
 
   return (
     <View style={{ margin: 20 }}>
       <View style={{ marginBottom: 10 }}>
-        {pickedLocation ? (
+        {inputData.lokacija ? (
           <Image
             style={styles.img}
             source={{
-              uri: getMapPreview(pickedLocation.lat, pickedLocation.lng),
+              uri: getMapPreview(
+                inputData.lokacija.latitude,
+                inputData.lokacija.longitude
+              ),
             }}
           />
         ) : (
@@ -59,4 +62,4 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
   },
-})
+});

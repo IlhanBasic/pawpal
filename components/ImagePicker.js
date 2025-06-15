@@ -2,9 +2,7 @@ import { useState } from "react";
 import { Alert, View, Text, Image, Button, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
-function CustomImagePicker() {
-  const [selectedImage, setSelectedImage] = useState(null);
-
+function CustomImagePicker({ inputData, setInputData }) {
   async function verifyPermissions() {
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
     if (status !== "granted") {
@@ -30,15 +28,14 @@ function CustomImagePicker() {
     });
 
     if (!image.canceled) {
-      console.log("image", image.assets[0].uri);
-      setSelectedImage(image.assets[0].uri);
+      setInputData({ ...inputData, slika: image.assets[0].uri });
     }
   }
 
   return (
     <View>
-      {selectedImage ? (
-        <Image source={{ uri: selectedImage }} style={styles.img} />
+      {inputData.slika ? (
+        <Image source={{ uri: inputData.slika }} style={styles.img} />
       ) : (
         <Text>No image selected</Text>
       )}

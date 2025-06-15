@@ -7,11 +7,6 @@ import {
   View,
   Pressable,
   Alert,
-  KeyboardAvoidingView,
-  TextInput,
-  Button,
-  Platform,
-  SafeAreaView,
   Modal,
 } from "react-native";
 import {
@@ -20,7 +15,7 @@ import {
   addFavoriteAsync,
   removeFavoriteAsync,
 } from "../utils/http";
-import SubmitButton from "../components/SubmitButton";
+import { getMapPreview } from "../utils/location";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import { DogsContext } from "../store/context/dogs";
 import { FavoritesContext } from "../store/context/favorites";
@@ -28,6 +23,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import COLORS from "../constants/colors";
 import LoaderOverlay from "../components/LoaderOverlay";
+import EditForm from "../components/EditForm";
 function DogScreen({ route, navigation }) {
   const [selectedDog, setSelectedDog] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -37,15 +33,11 @@ function DogScreen({ route, navigation }) {
   const { dogs, removeDog, updateDog } = useContext(DogsContext);
   const { favorites, addToFavorites, removeFromFavorites } =
     useContext(FavoritesContext);
-
   const dog = dogs.find((item) => item.name === dogId);
-
-  // Update favorite status when favorites or dogId changes
   useEffect(() => {
     setIsFavorite(favorites.some((item) => item.name === dogId));
   }, [favorites, dogId]);
 
-  // Handle favorite toggle
   const toggleFavorite = () => {
     if (isFavorite) {
       setIsFetching(true);
@@ -61,8 +53,6 @@ function DogScreen({ route, navigation }) {
       setIsFavorite(true);
     }
   };
-
-  // Set up header options
   useLayoutEffect(() => {
     navigation.setOptions({
       title: dog?.ime || "Dog Details",
@@ -121,7 +111,6 @@ function DogScreen({ route, navigation }) {
   function updateDogSubmitHandler(dog) {
     const updatedDog = { ...dog, starost: +dog.starost, tezina: +dog.tezina };
 
-    // Validate name
     if (!updatedDog.ime || updatedDog.ime.trim().length < 2) {
       Alert.alert("Unesite validno ime", "Ime mora biti najmanje 2 karaktera", [
         { text: "OK", style: "destructive" },
@@ -129,7 +118,6 @@ function DogScreen({ route, navigation }) {
       return;
     }
 
-    // Validate breed
     if (!updatedDog.rasa || updatedDog.rasa.trim().length < 2) {
       Alert.alert(
         "Unesite validnu rasu",
@@ -139,7 +127,6 @@ function DogScreen({ route, navigation }) {
       return;
     }
 
-    // Validate age
     if (isNaN(updatedDog.starost) || updatedDog.starost <= 0) {
       Alert.alert(
         "Unesite validnu starost",
@@ -149,7 +136,6 @@ function DogScreen({ route, navigation }) {
       return;
     }
 
-    // Validate weight
     if (isNaN(updatedDog.tezina) || updatedDog.tezina <= 0) {
       Alert.alert("Unesite validnu tezinu", "Tezina mora biti pozitivan broj", [
         { text: "OK", style: "destructive" },
@@ -157,7 +143,6 @@ function DogScreen({ route, navigation }) {
       return;
     }
 
-    // Validate color
     if (!updatedDog.boja || typeof updatedDog.boja !== "string") {
       Alert.alert("Unesite validnu boju", "Boja mora biti string", [
         { text: "OK", style: "destructive" },
@@ -165,7 +150,6 @@ function DogScreen({ route, navigation }) {
       return;
     }
 
-    // Validate gender
     if (!updatedDog.pol || typeof updatedDog.pol !== "string") {
       Alert.alert("Unesite validan pol", "Pol mora biti string", [
         { text: "OK", style: "destructive" },
@@ -173,7 +157,6 @@ function DogScreen({ route, navigation }) {
       return;
     }
 
-    // Validate image
     if (!updatedDog.slika || typeof updatedDog.slika !== "string") {
       Alert.alert("Unesite validnu sliku", "Slika mora biti string", [
         { text: "OK", style: "destructive" },
@@ -181,7 +164,6 @@ function DogScreen({ route, navigation }) {
       return;
     }
 
-    // Validate description
     if (!updatedDog.opis || typeof updatedDog.opis !== "string") {
       Alert.alert("Unesite validni opis", "Opis mora biti string", [
         { text: "OK", style: "destructive" },
@@ -207,7 +189,15 @@ function DogScreen({ route, navigation }) {
         <Text style={styles.detail}>Težina: {dog.tezina} kg</Text>
         <Text style={styles.detail}>Boja: {dog.boja}</Text>
         <Text style={styles.detail}>Pol: {dog.pol}</Text>
-        <Text style={styles.description}>{dog.opis}</Text>
+        <Text style={styles.description}>Opis:{dog.opis}</Text>
+        <Text>
+          <Image
+            source={{
+              uri: getMapPreview(dog.lokacija.latitude, dog.lokacija.longitude),
+            }}
+            style={styles.image}
+          />
+        </Text>
       </View>
       <View style={styles.buttonContainer}>
         <Pressable
@@ -234,106 +224,12 @@ function DogScreen({ route, navigation }) {
   if (isEditing) {
     content = (
       <Modal style={styles.modal} visible={isEditing} animationType="slide">
-        <SafeAreaView style={{ flex: 1 }}>
-          <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <ScrollView contentContainerStyle={styles.inputContainer}>
-              <Text style={styles.title}>Unesite podatke:</Text>
-              <TextInput
-                placeholder="Ime"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={selectedDog.ime}
-                onChangeText={(text) =>
-                  setSelectedDog({ ...selectedDog, ime: text })
-                }
-              />
-              <TextInput
-                placeholder="Rasa"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={selectedDog.rasa}
-                onChangeText={(text) =>
-                  setSelectedDog({ ...selectedDog, rasa: text })
-                }
-              />
-              <TextInput
-                placeholder="Tezina"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={selectedDog.tezina}
-                onChangeText={(text) =>
-                  setSelectedDog({ ...selectedDog, tezina: text })
-                }
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardAppearance="dark"
-                keyboardType="number-pad"
-              />
-              <TextInput
-                placeholder="Pol"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={selectedDog.pol}
-                onChangeText={(text) =>
-                  setSelectedDog({ ...selectedDog, pol: text })
-                }
-              />
-              <TextInput
-                placeholder="Startost"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={selectedDog.starost}
-                onChangeText={(text) =>
-                  setSelectedDog({ ...selectedDog, starost: text })
-                }
-                autoCapitalize="none"
-                autoCorrect={false}
-                keyboardAppearance="dark"
-                keyboardType="number-pad"
-              />
-              <TextInput
-                placeholder="Boja"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={selectedDog.boja}
-                onChangeText={(text) =>
-                  setSelectedDog({ ...selectedDog, boja: text })
-                }
-              />
-              <TextInput
-                placeholder="Slika"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={selectedDog.slika}
-                onChangeText={(text) =>
-                  setSelectedDog({ ...selectedDog, slika: text })
-                }
-              />
-              <TextInput
-                placeholder="Opis"
-                placeholderTextColor={COLORS.placeholder}
-                style={styles.textInput}
-                value={selectedDog.opis}
-                onChangeText={(text) =>
-                  setSelectedDog({ ...selectedDog, opis: text })
-                }
-              />
-              <SubmitButton onPress={() => updateDogSubmitHandler(selectedDog)}>
-                Izmeni
-              </SubmitButton>
-              <View style={{ marginTop: 10 }}>
-                <Button
-                  title="Odustani"
-                  color={COLORS.primary}
-                  onPress={() => setIsEditing(false)}
-                />
-              </View>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </SafeAreaView>
+        <EditForm
+          selectedDog={selectedDog}
+          setSelectedDog={setSelectedDog}
+          updateDogSubmitHandler={updateDogSubmitHandler}
+          setIsEditing={setIsEditing}
+        />
       </Modal>
     );
   }
@@ -345,7 +241,7 @@ export default DogScreen;
 const styles = StyleSheet.create({
   modal: {
     flex: 1,
-    backgroundColor: COLORS.background, 
+    backgroundColor: COLORS.background,
   },
   title: {
     fontSize: 34,
@@ -443,4 +339,3 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
 });
-
