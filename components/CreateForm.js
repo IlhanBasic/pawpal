@@ -96,6 +96,7 @@ function CreateForm({ inputData, setInputData, addDogHandler, setShowModal }) {
           <LocationPicker
             inputData={inputData}
             setInputData={setInputData}
+            setShow = {setShowModal}
           />
           <SubmitButton onPress={addDogHandler}>Dodaj</SubmitButton>
           <View style={{ marginTop: 10, marginBottom: 30 }}>

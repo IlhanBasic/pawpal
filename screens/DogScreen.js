@@ -24,7 +24,9 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import COLORS from "../constants/colors";
 import LoaderOverlay from "../components/LoaderOverlay";
 import EditForm from "../components/EditForm";
+import { LocationContext } from "../store/context/location";
 function DogScreen({ route, navigation }) {
+  const locationCtx = useContext(LocationContext);
   const [selectedDog, setSelectedDog] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -171,6 +173,8 @@ function DogScreen({ route, navigation }) {
       return;
     }
     updateDog(updatedDog.name, updatedDog);
+    locationCtx.lat(0);
+    locationCtx.lng(0);
     setIsFetching(true);
     updateDogAsync(updatedDog.name, updatedDog);
     setIsFetching(false);

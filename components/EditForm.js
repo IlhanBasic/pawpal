@@ -110,6 +110,7 @@ function EditForm({
           <LocationPicker
             inputData={selectedDog}
             setInputData={setSelectedDog}
+            setShow={setIsEditing}
           />
           <SubmitButton onPress={() => updateDogSubmitHandler(selectedDog)}>
             Izmeni
